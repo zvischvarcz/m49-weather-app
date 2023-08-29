@@ -1,1 +1,15 @@
+.App {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
 
+button {
+  margin: 2vw;
+  padding: 1vw;
+  font-size: x-large;
+  font-weight: bold;
+  cursor: pointer;
+
+}
