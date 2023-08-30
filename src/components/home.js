@@ -12,6 +12,15 @@ const Home = () => {
     const [password, setPassword] = useState()
     const navigate = useNavigate()
 
+    
+
+    useEffect(() => {
+        let cookie = getCookie("jwt-token")
+        if (cookie !== false) {
+            navigate('/loggedIn')
+        }
+    })
+    
     const loginHandler = async (event) => {
         event.preventDefault()
         let loginRes = await login(username, email, password)

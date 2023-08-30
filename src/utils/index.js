@@ -14,7 +14,7 @@ export const weatherData = async (city) => {
 export const login = async (username, email, password) => {
     console.log("LOGIN FUNCTION RUNNING")
     try {
-        const response = await fetch ("http://localhost:5001/users/login", {
+        const response = await fetch (`${process.env.API_LINK}users/login`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
@@ -26,7 +26,7 @@ export const login = async (username, email, password) => {
         const data = await response.json();
         console.log("LOGIN DATA =", data)
         if (data.errorMessage){
-            console.log(data.errorMessage)
+            console.log("ERROR IN LOGIN FUNCTION =", data.errorMessage)
             return
         }
         writeCookie("jwt-token", data.user.token, 7)
@@ -40,7 +40,7 @@ export const login = async (username, email, password) => {
 
 export const register = async (username, email, password, newUser) => {
     try {
-        const response = await fetch ("http://localhost:5001/users/register", {
+        const response = await fetch (`${process.env.API_LINK}users/register`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
@@ -61,7 +61,7 @@ export const register = async (username, email, password, newUser) => {
 
 export const authCheck = async (token) => {
     try {
-        const response = await fetch("http://localhost:5001/users/authCheck", {
+        const response = await fetch(`${process.env.API_LINK}users/authCheck`, {
             method: "GET",
             headers: {
                 "Content-Type" : "application/json",
