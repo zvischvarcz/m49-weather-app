@@ -18,7 +18,7 @@ const Home = () => {
     useEffect(() => {
         let cookie = getCookie("jwt-token")
         if (cookie !== false) {
-            navigate('/loggedIn')
+            navigate('/weather')
         }
     })
     
