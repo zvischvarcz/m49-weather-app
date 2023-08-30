@@ -1,8 +1,9 @@
 import React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { login, register } from "../utils"
 import '../App.css'
 import { useNavigate } from "react-router-dom"
+import { getCookie } from "../common"
 
 
 
