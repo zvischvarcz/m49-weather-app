@@ -81,7 +81,7 @@ export const deleteUserByID = async (token) => {
             headers: {
                 "Content-Type" : "application/json",
                 "Authorization" : token
-            },
+            }
         })
         const data = await response.json()
         return data
@@ -90,3 +90,41 @@ export const deleteUserByID = async (token) => {
         console.log(error)
     }
 }
+
+export const addFavorite = async (city, token) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API_LINK}users/addFavorite`, {
+            method: "PUT",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization" : token
+            },
+            body: JSON.stringify({
+                "newLocation": city
+            })
+        })
+        const data = await response.json()
+        return data
+    } 
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const getUser = async (token) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API_LINK}users/search`, {
+            method: "GET",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization" : token
+            }
+        })
+        const user = await response.json()
+        return user.user
+    } 
+    catch (error) {
+        console.log(error)
+    }
+}
+
