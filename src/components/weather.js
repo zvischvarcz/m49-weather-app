@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { weatherData } from "../utils/index"
+import { weatherData, deleteUserByID } from "../utils/index"
 import { useNavigate } from 'react-router-dom';
 import { deleteCookie, getCookie } from '../common';
 
@@ -8,6 +8,8 @@ function Weather() {
   const [sunrise, setSunrise] = useState()
   const [weather, setWeather] = useState()
   const [city, setCity] = useState()
+  const [deleteRes, setDeleteRes] = useState()
+
 
   const navigate = useNavigate()
 
@@ -34,9 +36,19 @@ function Weather() {
       setSunset(new Date(weather.sys.sunset * 1000).toLocaleTimeString("en-GB"))
       setSunrise(new Date(weather.sys.sunrise * 1000).toLocaleTimeString("en-GB"))
     }
-    
-
   },[weather])
+  const deleteUser = async () => {
+    let cookie = getCookie("jwt-token")
+    let res = await deleteUserByID(cookie)
+    try {
+      if (res.amount >= 1){
+        navigate("/")
+      }
+    } catch (error){
+      console.log(error)
+      setDeleteRes("Delete unsuccessful")
+    }
+  }
     
 
   return (
@@ -60,6 +72,10 @@ function Weather() {
       </div>}
       <div>
         <button onClick={logOut}>Log out</button>
+      </div>
+      <div>
+      <button onClick={deleteUser}>Delete user</button>
+      <p>{deleteRes}</p>
       </div>
     </div>
   );

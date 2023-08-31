@@ -12,7 +12,6 @@ export const weatherData = async (city) => {
 
 
 export const login = async (username, email, password) => {
-    console.log("LOGIN FUNCTION RUNNING")
     try {
         const response = await fetch (`${process.env.REACT_APP_API_LINK}users/login`, {
             method: "POST",
@@ -24,10 +23,8 @@ export const login = async (username, email, password) => {
             })
         })
         const data = await response.json();
-        console.log("LOGIN DATA =", data)
         if (data.errorMessage){
-            console.log("ERROR IN LOGIN FUNCTION =", data.errorMessage)
-            return
+            return (data.errorMessage)
         }
         writeCookie("jwt-token", data.user.token, 7)
         return(data)
@@ -38,7 +35,7 @@ export const login = async (username, email, password) => {
 }
 
 
-export const register = async (username, email, password, newUser) => {
+export const register = async (username, email, password) => {
     try {
         const response = await fetch (`${process.env.REACT_APP_API_LINK}users/register`, {
             method: "POST",
@@ -50,8 +47,9 @@ export const register = async (username, email, password, newUser) => {
             })
         }) 
         const data = await response.json();
-        newUser(data.user.username)
-        
+        if (data.errorMessage){
+            return (data.errorMessage)
+        }
         return(data)
           
     } catch (error) {
@@ -70,6 +68,23 @@ export const authCheck = async (token) => {
         })
         const data = await response.json()
         return data.user.username
+    } 
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const deleteUserByID = async (token) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API_LINK}users/delete`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization" : token
+            },
+        })
+        const data = await response.json()
+        return data
     } 
     catch (error) {
         console.log(error)
