@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { weatherData, deleteUserByID, addFavorite, getUser } from "../utils/index"
+import { weatherData, deleteUserByID, addFavorite, getUser, removeFav } from "../utils/index"
 import { useNavigate } from 'react-router-dom';
 import { deleteCookie, getCookie } from '../common';
 import '../App.css'
@@ -88,13 +88,20 @@ function Weather() {
     setWeather(data)
     favButton.current.className = "flex"
   }
+
+  const deleteFav = async (location) => {
+    
+    let cookie = getCookie("jwt-token")
+    let data = await removeFav(cookie, location)
+    console.log(data)
+  }
     
 
   return (
     <div className="WeatherApp">
       <form onSubmit={submitHandler} className='WeatherForm'>
         <label>City: &nbsp;
-          <input onChange={(event) => setCity(event.target.value)} required></input>
+          {city === undefined ? (<input onChange={(event) => setCity(event.target.value)} required></input>) : (<input onChange={(event) => setCity(event.target.value)}></input>)}
         </label>
         <div>
           <select onChange={(event) => favWeather(event.target.value)}>
@@ -111,7 +118,7 @@ function Weather() {
         <div className='flex'> 
           <button type="submit">Click to see weather</button>
           <div className="hidden" ref={favButton}>
-            <button onClick={addFav} >Add {city} to favourites</button>
+            <button onClick={favCities.includes(city) ? () => deleteFav(city) : addFav} >{favCities.includes(city) ? `Remove ${city} from favourites` : `Add ${city} to favourites`}</button>
             
           </div>
           <p>{addFavRes}</p>

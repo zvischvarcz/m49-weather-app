@@ -128,3 +128,22 @@ export const getUser = async (token) => {
     }
 }
 
+export const removeFav = async (token, location) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API_LINK}users/removeFavorite`, {
+            method: "PUT",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization" : token
+            },
+            body: JSON.stringify({
+                "removedLocation": location
+            })
+        })
+        const user = await response.json()
+        return user.user
+    } 
+    catch (error) {
+        console.log(error)
+    }
+}
