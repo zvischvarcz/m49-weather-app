@@ -61,7 +61,7 @@ const Home = () => {
                     </label>
                     <br></br>
                     <label className="LoginLabel">Password
-                        <input onChange={(event) => setPassword(event.target.value)} required></input>
+                        <input type='password' onChange={(event) => setPassword(event.target.value)} required></input>
                     </label>
                     <br></br>
                     <button type='submit'>Login</button>

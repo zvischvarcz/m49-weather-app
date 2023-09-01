@@ -84,7 +84,7 @@ function Weather() {
   
   const favWeather = async (value) => {
     setCity(value)
-    let data = await weatherData(city)
+    let data = await weatherData(value)
     setWeather(data)
     favButton.current.className = "flex"
   }
