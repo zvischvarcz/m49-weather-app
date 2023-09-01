@@ -92,8 +92,8 @@ function Weather() {
   const deleteFav = async (location) => {
     
     let cookie = getCookie("jwt-token")
-    let data = await removeFav(cookie, location)
-    console.log(data)
+    await removeFav(cookie, location)
+    navigate("/")
   }
     
 
